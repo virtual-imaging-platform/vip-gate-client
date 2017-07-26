@@ -34,13 +34,14 @@ public class ResultControl implements ActionListener{
     public void execute() {
 
 
-
+        //create a temporary download monitor that shows "downloading"
         DownloadMonitor downloadMonitor = new DownloadMonitor();
 
         File file = new File(downloadDir + sep + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()));
-        if (!file.exists()) {
-            file.mkdir();
-        }
+       //create folder is managed by vip-cli
+        //if (!file.exists()) {
+          //  file.mkdir();
+        //}
 
         Runnable r = () -> {
 

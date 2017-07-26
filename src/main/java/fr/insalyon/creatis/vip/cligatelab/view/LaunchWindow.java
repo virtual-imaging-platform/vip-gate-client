@@ -40,10 +40,10 @@ public class LaunchWindow {
 
     public LaunchWindow() {
 
-        PrintStream printStream = new PrintStream(new CustomOutputStream(infoTextArea));
-        System.setOut(printStream);
-        System.setErr(printStream);
-        System.out.println("Getting gate release from vip...");
+        //PrintStream printStream = new PrintStream(new CustomOutputStream(infoTextArea));
+        //System.setOut(printStream);
+        //System.setErr(printStream);
+        infoTextArea.setText(infoTextArea.getText() + "Getting gate release from vip...");
         launchButton.addActionListener(new LaunchButtonControl(this));
 
 
@@ -102,6 +102,13 @@ public class LaunchWindow {
 
     public void setDefaultGateRelease(String defaultGateRelease) {
         this.defaultGateRelease = defaultGateRelease;
+        DefaultComboBoxModel dcbm = (DefaultComboBoxModel) gateReleaseComboBox.getModel();
+
+
+        if (dcbm.getIndexOf(defaultGateRelease) != -1) {
+
+            gateReleaseComboBox.setSelectedItem(defaultGateRelease);
+        }
     }
 
 
@@ -151,47 +158,6 @@ public class LaunchWindow {
         return executionNameField;
     }
 
-    private void setGateReleaseComboBox() {
-
-
-        this.getGateReleaseComboBox().removeAllItems();
-        String path = BASEPATH + "/path/directory?uri=vip://" + GATERELEASESPATH;
-        // URLEncoder.encode(path,)
-        HttpURLConnection httpConnection = null;
-        try {
-            httpConnection = (HttpURLConnection) new URL(path).openConnection();
-            httpConnection.setRequestMethod("GET");
-            httpConnection.setRequestProperty("apiKey", APIKEY);
-            InputStream response = null;
-            response = httpConnection.getInputStream();
-            BufferedReader br = null;
-            StringBuilder sb = new StringBuilder();
-            String line;
-            br = new BufferedReader(new InputStreamReader(response));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-            br.close();
-
-            JSONArray jsonArray = new JSONArray(sb.toString());//.substring(1,sb.toString().length()-1));
-            System.out.println("Gate Release on VIP obtained.");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                String releaseuri = jsonArray.getJSONObject(i).getString("platformURI");
-                gateReleaseComboBox.addItem(releaseuri.substring(releaseuri.lastIndexOf('/') + 1));
-            }
-            gateReleaseComboBox.setMaximumSize(new Dimension((int) (SCREENWIDTH * INTERFACESCALE * 0.3), (int) (SCREENHEIGHT * INTERFACESCALE * 0.03)));
-            if (defaultGateRelease.equals("")) {
-
-            } else if (((DefaultComboBoxModel) gateReleaseComboBox.getModel()).getIndexOf(defaultGateRelease) != -1) {
-                gateReleaseComboBox.setSelectedItem(defaultGateRelease);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public String getDefaultGateRelease() {
         return defaultGateRelease;

@@ -22,7 +22,6 @@ import static fr.insalyon.creatis.vip.cligatelab.controller.Main.SCREENWIDTH;
  */
 class DownloadButtonEditor extends DefaultCellEditor {
     protected JButton button;
-
     private String label;
     private String executionIdentifier;
 

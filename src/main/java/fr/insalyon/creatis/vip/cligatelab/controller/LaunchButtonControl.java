@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static fr.insalyon.creatis.vip.cligatelab.controller.Main.GATERELEASEFOLDER;
 import static fr.insalyon.creatis.vip.cligatelab.controller.Main.PIPELINE;
 
 /**
@@ -35,7 +36,7 @@ public class LaunchButtonControl implements ActionListener {
             JFrame popup = new JFrame();
             JOptionPane.showMessageDialog(popup,
                     "please fill the missing field");
-            System.err.println("please fill the missing field");
+            launchWindow.getInfoTextArea().setText(launchWindow.getInfoTextArea().getText()+System.lineSeparator()+"please fill the missing field");
         } else {
             setParams();
             execute();
@@ -66,7 +67,7 @@ public class LaunchButtonControl implements ActionListener {
 
         }
         params.put("GateInput", launchWindow.getGateInputFiled().getText());
-        String tmp = "/vip/GateLab (group)/releases//" + launchWindow.getGateReleaseComboBox().getSelectedItem();
+        String tmp = GATERELEASEFOLDER + launchWindow.getGateReleaseComboBox().getSelectedItem();
         params.put("GateRelease", tmp);
         params.put("NumberOfParticles", launchWindow.getNumberOfParticlesField().getText());
         switch ((String) launchWindow.getParallelizationTypeComboBox().getSelectedItem()) {
@@ -111,10 +112,10 @@ public class LaunchButtonControl implements ActionListener {
                     ),
                     (Process ps) -> {
                         String stdErr = Util.getStringFromInputStream(ps.getErrorStream());
-                        System.out.println(stdErr);
+                        launchWindow.getInfoTextArea().setText(launchWindow.getInfoTextArea().getText()+System.lineSeparator()+stdErr);
                         String stdOut = Util.getStringFromInputStream(ps.getInputStream());
-                        System.out.println(stdOut);
-
+                        launchWindow.getInfoTextArea().setText(launchWindow.getInfoTextArea().getText()+System.lineSeparator()+stdOut);
+                        //if stderr is empty, the launching is succeeded
                         if (new String(stdErr).equals("")) {
                             launchWindow.getExecutionInfoLabel().setText("launch complete");
                             launchWindow.getExecutionInfoLabel().setForeground(Color.GREEN);

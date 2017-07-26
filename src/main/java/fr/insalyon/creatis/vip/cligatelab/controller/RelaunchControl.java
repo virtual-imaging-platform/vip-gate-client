@@ -45,8 +45,8 @@ public class RelaunchControl {
                         String stdOut = Util.getStringFromInputStream(ps.getInputStream());
                         String stdErr = Util.getStringFromInputStream(ps.getErrorStream());
                         relaunchMonitor.getSpinner().setVisible(false);
-                        // if error gathering information (the existence of input files in vip-cli),
-                        //the msg will be printed by stdErr
+                        // if failed gathering information (the existence of input files in vip-cli),
+                        // the msg will be printed by stdErr
                         if (!(stdErr.equals(""))) {
                             relaunchMonitor.getInfoLabel().setText(stdErr);
                         } else {

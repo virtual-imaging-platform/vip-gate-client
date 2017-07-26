@@ -5,12 +5,8 @@ import fr.insalyon.creatis.vip.cligatelab.view.StartMenu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,15 +17,15 @@ public class Main {
     public final static String EXECUTABLEFILE = "vip-cli.jar";  //"/Users/qifan/GitHub/vip_client/target/vip-cli-1.0-jar-with-dependencies.jar";
     public final static String PIPELINE = "GateLab/0.4.5";
     public final static String BASEPATH = "https://vip.creatis.insa-lyon.fr/rest";
-    public final static String GATERELEASESPATH = "vip.creatis.insa-lyon.fr/vip/GateLab%20(group)/releases/";
-    public final static String TRUSTSTOREFILE = "./truststore";
-    public final static String DIRINPUTSONVIP = "/vip/Home/GateInputs";
+    public final static String GATERELEASEFOLDER =  "/vip/GateLab (group)/releases//";
+    public final static String TRUSTSTORE_FILE = "./truststore";
+    public final static String DIRINPUTPATH = "/myGateSimus/inputs";
     public final static GraphicsDevice GRAPHICDEVICE = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     public final static double SCREENWIDTH = GRAPHICDEVICE.getDisplayMode().getWidth();
     public final static double SCREENHEIGHT = GRAPHICDEVICE.getDisplayMode().getHeight();
     public final static int FONTSIZE = (int) SCREENHEIGHT / 70;
     public final static double INTERFACESCALE = 1;
-    public final static String DEFAULTGATERELEASE = "";
+    public final static String DEFAULTGATERELEASE = "dsarrut_opengate_version_7.0.tar.gz";
 
     public static String APIKEY;
 
@@ -101,8 +97,8 @@ public class Main {
 
     private void setSslConnection() {
         //set trust chosenFile
-        System.setProperty("javax.net.ssl.keyStore", TRUSTSTOREFILE);
-        System.setProperty("javax.net.ssl.trustStore", TRUSTSTOREFILE);
+        System.setProperty("javax.net.ssl.keyStore", TRUSTSTORE_FILE);
+        System.setProperty("javax.net.ssl.trustStore", TRUSTSTORE_FILE);
         System.setProperty("javax.net.ssl.keyStorePassword", "creatis");
     }
 
